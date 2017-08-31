@@ -1,11 +1,0 @@
-
-csquid:S1192"GDefine a constant instead of duplicating this literal "/root," 3 times.( Ëœˆ8ÃÆò¹ã+
-nsquid:S3776"RRefactor this method to reduce its Cognitive Complexity from 20 to the 15 allowed.(ó“÷Œ8ÈÊ³¹ã+
-bsquid:S1192"FDefine a constant instead of duplicating this literal ".temp" 4 times.(Õ’¹–8èƒ½¸ã+
-fsquid:S1192"JDefine a constant instead of duplicating this literal "%s(%d).%s" 3 times.(İªåÛ8øö¼¹ã+
-ssquid:S3776"RRefactor this method to reduce its Cognitive Complexity from 31 to the 15 allowed.(”Ê•ãşÿÿÿÿ8­ÿò¹ã+
-nsquid:S1192"MDefine a constant instead of duplicating this literal "explorer.exe" 3 times.(şœ©Ùùÿÿÿÿ8ÃÆò¹ã+
-nsquid:S3776"RRefactor this method to reduce its Cognitive Complexity from 25 to the 15 allowed.(åøÃü8ÉŞ°ã+
-jsquid:S1192"NDefine a constant instead of duplicating this literal "[^A-Za-z0-9_]" 4 times.(ˆ¢œÄ8èƒ½¸ã+
-jsquid:S1192"IDefine a constant instead of duplicating this literal "/select," 3 times.(á²—Ëøÿÿÿÿ8ÃÆò¹ã+
-usquid:S1192"YDefine a constant instead of duplicating this literal "output file link error: " 3 times.(¬—¸ó8ÃÆò¹ã+
