@@ -28,10 +28,6 @@ public class Duration {
         this.seconds = seconds;
     }
 
-    /**
-     * Calculate the percentage of input duration compare to this duration.
-     *
-     */
     public float getPercent(Duration duration) {
         return getPercent(duration.hours, duration.minutes, duration.seconds);
     }

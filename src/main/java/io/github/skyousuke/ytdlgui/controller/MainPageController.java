@@ -109,9 +109,7 @@ public class MainPageController {
     }
 
     private void cleanUp() {
-        youtubeDL.dispose();
-        ffmpeg.dispose();
-        ffprobe.dispose();
+        ProcessUtils.dispose();
     }
 
     private void onDownloadButtonClick() {
@@ -229,7 +227,7 @@ public class MainPageController {
     private boolean findVideoTitleName() {
         final String youtubeID = YoutubeUtils.getYoutubeID(linkTextField.getText());
 
-        videoTitle = ApiUtils.getYoutubeVideoTitle(youtubeID);
+        videoTitle = YoutubeUtils.getYoutubeVideoTitle(youtubeID);
         if (videoTitle == null) {
             Log.debug("findVideoTitleName(): can't find video title!");
             return false;
@@ -670,5 +668,7 @@ public class MainPageController {
         return false;
     }
 
-
+    public Label getStatusLabel() {
+        return statusLabel;
+    }
 }

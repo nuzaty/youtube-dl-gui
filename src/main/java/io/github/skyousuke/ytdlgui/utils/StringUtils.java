@@ -20,9 +20,7 @@ import java.util.List;
 
 public class StringUtils {
 
-
-    private StringUtils() {
-    }
+    private StringUtils() {}
 
     public static String getListAsString(List list) {
         StringBuilder sb = new StringBuilder();

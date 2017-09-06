@@ -23,37 +23,18 @@ import io.github.skyousuke.ytdlgui.video.VideoFormat;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
-public class VideoFormatFinderListener extends AwaitingProcessListener {
+public class VideoFormatFinderListener extends DottedProcessListener {
 
     private List<VideoFormat> videoFormats = new ArrayList<>();
 
-    private MainPageController pageController;
-    private Timer timer = new Timer();
-    private int dotCount = 0;
-
     public VideoFormatFinderListener(MainPageController pageController) {
-        this.pageController = pageController;
+        super(pageController.getStatusLabel());
     }
 
     @Override
     public void onStart() {
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                String newStatus;
-                if (dotCount < 3) {
-                    newStatus = pageController.getStatusText() + '.';
-                    dotCount++;
-                } else {
-                    dotCount = 0;
-                    newStatus = pageController.getStatusText().substring(0, pageController.getStatusText().length() - 3);
-                }
-                pageController.updateStatusText(newStatus);
-            }
-        }, 250, 250);
+        startDot();
     }
 
     @Override
@@ -72,7 +53,7 @@ public class VideoFormatFinderListener extends AwaitingProcessListener {
         for (VideoFormat videoFormat : videoFormats) {
             Log.debug(videoFormat.toString());
         }
-        timer.cancel();
+        cancelDot();
     }
 
     public List<VideoFormat> getVideoFormats() {

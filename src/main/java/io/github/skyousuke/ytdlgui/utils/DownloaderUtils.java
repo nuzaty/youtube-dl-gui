@@ -21,8 +21,7 @@ import java.util.regex.Pattern;
 
 public class DownloaderUtils {
 
-    private DownloaderUtils() {
-    }
+    private DownloaderUtils() {}
 
     public static String getDownloadProgress(String message) {
         String regex = "\\[download]\\s+(.+ETA\\s+\\d+:\\d+)\\n*";

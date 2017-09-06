@@ -23,45 +23,28 @@ import io.github.skyousuke.ytdlgui.utils.Duration;
 import io.github.skyousuke.ytdlgui.utils.StatusMessage;
 
 import java.util.Locale;
-import java.util.Timer;
-import java.util.TimerTask;
 
-public class ConvertToMp4Listener extends AwaitingProcessListener {
+public class ConvertToMp4Listener extends DottedProcessListener {
 
     private Duration totalDuration;
-
     private MainPageController pageController;
-    private Timer timer = new Timer();
-    private int dotCount = 0;
 
     public ConvertToMp4Listener(MainPageController pageController, Duration totalDuration) {
+        super(pageController.getStatusLabel());
         this.pageController = pageController;
         this.totalDuration = totalDuration;
     }
 
     @Override
     public void onStart() {
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                String newStatus;
-                if (dotCount < 3) {
-                    newStatus = pageController.getStatusText() + '.';
-                    dotCount++;
-                } else {
-                    dotCount = 0;
-                    newStatus = pageController.getStatusText().substring(0, pageController.getStatusText().length() - 3);
-                }
-                pageController.updateStatusText(newStatus);
-            }
-        }, 250, 250);
+        startDot();
     }
 
     @Override
     public void onOutput(String message) {
         Duration convertingDuration = ConverterUtils.getConvertingDuration(message);
         if (convertingDuration != null) {
-            timer.cancel();
+            cancelDot();
             float percentComplete = totalDuration.getPercent(convertingDuration);
             String text = String.format(Locale.US, "%s (%.1f%%)",
                     StatusMessage.CONVERTING_TO_MP4.toString(), percentComplete);

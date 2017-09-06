@@ -16,6 +16,11 @@
 
 package io.github.skyousuke.ytdlgui.utils;
 
+import com.eclipsesource.json.Json;
+import com.eclipsesource.json.JsonObject;
+import com.esotericsoftware.minlog.Log;
+
+import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -23,6 +28,19 @@ public class YoutubeUtils {
 
     private YoutubeUtils() {}
 
+    public static String getYoutubeVideoTitle(String youtubeID) {
+        final String requestUrl = "http://www.youtube.com/oembed?url=http://www.youtube.com/watch?v="
+                + youtubeID + "&format=json";
+
+        try {
+            String jsonString = ApiUtils.get(requestUrl);
+            JsonObject jsonObject = Json.parse(jsonString).asObject();
+            return jsonObject.get("title").asString();
+        } catch (IOException e) {
+            Log.debug("getYoutubeVideoTitle() error!", e);
+            return null;
+        }
+    }
 
     public static String getYoutubeID(String url) {
         String regex = "^.*(youtu.be\\/|v\\/|e\\/|u\\/\\w+\\/|embed\\/|v=)([^#\\&\\?]*).*";
@@ -32,11 +50,22 @@ public class YoutubeUtils {
         if (matcher.find())
             return matcher.group(2);
 
-        if (ApiUtils.isValidYoutubeId(url))
+        if (isValidYoutubeId(url))
             return url;
 
         return "";
     }
 
+    private static boolean isValidYoutubeId(String youtubeID) {
+        final String requestUrl = "http://www.youtube.com/oembed?url=http://www.youtube.com/watch?v="
+                + youtubeID + "&format=json";
+        try {
+            ApiUtils.get(requestUrl);
+            return true;
+        } catch (IOException e) {
+            Log.debug("isValidYoutubeId() error!", e);
+            return false;
+        }
+    }
 
 }

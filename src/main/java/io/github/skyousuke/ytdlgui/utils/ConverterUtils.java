@@ -23,24 +23,10 @@ import java.util.regex.Pattern;
 
 public class ConverterUtils {
 
-    private ConverterUtils() {
-    }
+    private ConverterUtils() {}
 
     public static Duration getConvertingDuration(String message) {
         String regex = "size=\\s.+time=(\\d+):(\\d+):(\\d+(\\.\\d+)?).+\\n*";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(message);
-        if (matcher.find()) {
-            String hrs = matcher.group(1);
-            String mins = matcher.group(2);
-            String secs = matcher.group(3);
-            return getDurationFromString(hrs, mins, secs);
-        }
-        return null;
-    }
-
-    public static Duration getTotalDuration(String message) {
-        String regex = "\\s*Duration:\\s+(\\d+):(\\d+):(\\d+(\\.\\d+)?)\\n*";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(message);
         if (matcher.find()) {
@@ -62,7 +48,7 @@ public class ConverterUtils {
                 return new Duration(hours, minutes, seconds);
 
             } catch (NumberFormatException ignored){
-                Log.debug("getDurationFromString() warning: the string does not have the appropriate format!: "
+                Log.debug("getDurationFromString() : the string does not have the appropriate format!: "
                         + hrs + " " + mins + " " + secs);
                 return null;
             }

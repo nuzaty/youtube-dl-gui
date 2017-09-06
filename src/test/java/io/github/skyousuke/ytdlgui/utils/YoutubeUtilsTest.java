@@ -1,9 +1,16 @@
 package io.github.skyousuke.ytdlgui.utils;
 
+import com.esotericsoftware.minlog.Log;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 class YoutubeUtilsTest {
+
+    @BeforeAll
+    static void setUp() {
+        Log.DEBUG();
+    }
 
     @Test
     void getYoutubeID() {
@@ -51,6 +58,16 @@ class YoutubeUtilsTest {
         Assertions.assertEquals("NTuAV_fF-bs", YoutubeUtils.getYoutubeID(url19));
         Assertions.assertEquals("kOQf3lAqDxA", YoutubeUtils.getYoutubeID(url20));
         Assertions.assertEquals("ZGfC2boki-I", YoutubeUtils.getYoutubeID(url21));
+    }
+
+    @Test
+    void getYoutubeVideoTitleTest() {
+        Assertions.assertEquals(YoutubeUtils.getYoutubeVideoTitle(null), null);
+        Assertions.assertEquals(YoutubeUtils.getYoutubeVideoTitle("wrongID"), null);
+        Assertions.assertEquals(YoutubeUtils.getYoutubeVideoTitle("YEn0efm5SRQ"), "20 random facts about kanninich (20 เรื่องจริงของ kanninich )");
+        Assertions.assertEquals(YoutubeUtils.getYoutubeVideoTitle("a2GujJZfXpg"), "スパークル [original ver.] -Your name. Music Video edition- 予告編 from new album「人間開花」初回盤DVD");
+        Assertions.assertEquals(YoutubeUtils.getYoutubeVideoTitle("r5ZQ7KnK_lQ"), "RADWIMPS／夢灯籠（映画『君の名は。』主題歌）cover by 宇野悠人");
+        Assertions.assertEquals(YoutubeUtils.getYoutubeVideoTitle("88_vQrClgMw"), "จังหวะการเล่นมันส์ๆ ของ \"ชนาธิป\" ปะทะ เวกัลตะ เซนได นัดที่ 6 ใน เจลีก | 26-08-17");
     }
 
 }

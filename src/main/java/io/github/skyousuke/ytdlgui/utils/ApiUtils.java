@@ -16,10 +16,6 @@
 
 package io.github.skyousuke.ytdlgui.utils;
 
-import com.eclipsesource.json.Json;
-import com.eclipsesource.json.JsonObject;
-import com.esotericsoftware.minlog.Log;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -29,38 +25,11 @@ import java.net.URL;
 public class ApiUtils {
 
     private static final int BUFFER_SIZE = 4096;
-    private static final int URL_TIMEOUT = 5000; //milliseconds
+    private static final int URL_TIMEOUT = 5000;
 
-    private ApiUtils() {
-    }
+    private ApiUtils() {}
 
-    public static String getYoutubeVideoTitle(String youtubeID) {
-        final String requestUrl = "http://www.youtube.com/oembed?url=http://www.youtube.com/watch?v="
-                + youtubeID + "&format=json";
-
-        try {
-            String jsonString = readJsonFromUrl(requestUrl);
-            JsonObject jsonObject = Json.parse(jsonString).asObject();
-            return jsonObject.get("title").asString();
-        } catch (IOException e) {
-            Log.debug("getYoutubeVideoTitle() error!", e);
-            return null;
-        }
-    }
-
-    public static boolean isValidYoutubeId(String youtubeID) {
-        final String requestUrl = "http://www.youtube.com/oembed?url=http://www.youtube.com/watch?v="
-                + youtubeID + "&format=json";
-        try {
-            readJsonFromUrl(requestUrl);
-            return true;
-        } catch (IOException e) {
-            return false;
-        }
-    }
-
-
-    private static String readJsonFromUrl(String urlString) throws IOException {
+    public static String get(String urlString) throws IOException {
         String fixedUrlString = urlString.replace(" ", "%20");
 
         URL url = new URL(fixedUrlString);

@@ -20,18 +20,14 @@ import com.esotericsoftware.minlog.Log;
 import io.github.skyousuke.ytdlgui.controller.MainPageController;
 import io.github.skyousuke.ytdlgui.utils.DownloaderUtils;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
-public class DownloadListener extends AwaitingProcessListener {
+public class DownloadListener extends DottedProcessListener {
 
     private MainPageController pageController;
-    private Timer timer = new Timer();
-    private int dotCount = 0;
 
     private String frontProgressText;
 
     public DownloadListener(MainPageController pageController, String frontProgressText) {
+        super(pageController.getStatusLabel());
         this.pageController = pageController;
         this.frontProgressText = frontProgressText;
     }
@@ -42,27 +38,14 @@ public class DownloadListener extends AwaitingProcessListener {
 
     @Override
     public void onStart() {
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                String newStatus;
-                if (dotCount < 3) {
-                    newStatus = pageController.getStatusText() + '.';
-                    dotCount++;
-                } else {
-                    dotCount = 0;
-                    newStatus = pageController.getStatusText().substring(0, pageController.getStatusText().length() - 3);
-                }
-                pageController.updateStatusText(newStatus);
-            }
-        }, 250, 250);
+        startDot();
     }
 
     @Override
     public void onOutput(String message) {
         String downloadProgressText = DownloaderUtils.getDownloadProgress(message);
         if (downloadProgressText != null) {
-            timer.cancel();
+            cancelDot();
             pageController.updateStatusText(frontProgressText + ' ' + downloadProgressText);
         }
         Log.debug(message);
